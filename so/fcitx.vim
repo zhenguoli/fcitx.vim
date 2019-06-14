@@ -21,6 +21,7 @@ set cpo&vim
 " Functions:
 function Fcitx2en()
   let b:inputstatus = system(g:fcitx_remote)
+  " Refer to https://superuser.com/questions/935165/how-can-i-change-my-fcitx-input-method-from-the-terminal/992394
   call system(g:fcitx_remote . ' -s fcitx-keyboard-us')
 endfunction
 

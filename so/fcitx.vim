@@ -25,11 +25,15 @@ function Fcitx2en()
 endfunction
 
 function Fcitx2Origin()
-  if b:inputstatus == 1
-    call system(g:fcitx_remote . ' -c')
-  elseif b:inputstatus == 2
-    call system(g:fcitx_remote . ' -o')
-  endif
+  try
+    if b:inputstatus == 1
+      call system(g:fcitx_remote . ' -c')
+    elseif b:inputstatus == 2
+      call system(g:fcitx_remote . ' -o')
+    endif
+  catch /inputstatus/
+    let b:inputstatus = system(g:fcitx_remote)
+  endtry
 endfunction
 " ---------------------------------------------------------------------
 " Autocmds:

@@ -20,26 +20,21 @@ set cpo&vim
 " ---------------------------------------------------------------------
 " Functions:
 function Fcitx2en()
-  let inputstatus = system(g:fcitx_remote)
-  if inputstatus == 2
-    let b:inputtoggle = 1
-    call system(g:fcitx_remote . ' -c')
-  endif
+  let b:inputstatus = system(g:fcitx_remote)
+  call system(g:fcitx_remote . ' -s fcitx-keyboard-us')
 endfunction
-function Fcitx2zh()
-  try
-    if b:inputtoggle == 1
-      call system(g:fcitx_remote . ' -o')
-      let b:inputtoggle = 0
-    endif
-  catch /inputtoggle/
-    let b:inputtoggle = 0
-  endtry
+
+function Fcitx2Origin()
+  if b:inputstatus == 1
+    call system(g:fcitx_remote . ' -c')
+  elseif b:inputstatus == 2
+    call system(g:fcitx_remote . ' -o')
+  endif
 endfunction
 " ---------------------------------------------------------------------
 " Autocmds:
 au InsertLeave * call Fcitx2en()
-au InsertEnter * call Fcitx2zh()
+au InsertEnter * call Fcitx2Origin()
 " ---------------------------------------------------------------------
 "  Restoration And Modelines:
 let &cpo=s:keepcpo
